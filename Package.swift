@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.0
 import PackageDescription
 
 let package = Package(
@@ -27,26 +27,15 @@ let package = Package(
                 .product(name: "Platform", package: "platform"),
                 .product(name: "Time", package: "time"),
                 .product(name: "FileSystem", package: "filesystem"),
-            ],
-            swiftSettings: swift6),
+            ]),
         .testTarget(
             name: "Tests",
             dependencies: [
                 .target(name: "Process"),
                 .product(name: "FileSystem", package: "filesystem"),
-            ],
-            swiftSettings: swift6),
+            ]),
     ]
 )
-
-let swift6: [SwiftSetting] = [
-    .enableUpcomingFeature("ConciseMagicFile"),
-    .enableUpcomingFeature("ForwardTrailingClosures"),
-    .enableUpcomingFeature("ExistentialAny"),
-    .enableUpcomingFeature("StrictConcurrency"),
-    .enableUpcomingFeature("ImplicitOpenExistentials"),
-    .enableUpcomingFeature("BareSlashRegexLiterals"),
-]
 
 // MARK: - custom package source
 
