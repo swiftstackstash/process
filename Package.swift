@@ -13,10 +13,12 @@ let package = Package(
             targets: ["Process"]),
     ],
     dependencies: [
-        .package(name: "Platform"),
-        .package(name: "Time"),
-        .package(name: "FileSystem"),
-        .package(name: "Test"),
+        .package(
+            name: "Platform"),
+        .package(
+            name: "Time"),
+        .package(
+            name: "FileSystem"),
     ],
     targets: [
         .target(
@@ -27,14 +29,12 @@ let package = Package(
                 .product(name: "FileSystem", package: "filesystem"),
             ],
             swiftSettings: swift6),
-        .executableTarget(
-            name: "Tests/Process",
+        .testTarget(
+            name: "Tests",
             dependencies: [
                 .target(name: "Process"),
                 .product(name: "FileSystem", package: "filesystem"),
-                .product(name: "Test", package: "test"),
             ],
-            path: "Tests/Process",
             swiftSettings: swift6),
     ]
 )

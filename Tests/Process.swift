@@ -1,10 +1,11 @@
-import Test
+import Testing
 import Time
 import FileSystem
 
 @testable import Process
 
-test("ByName") {
+@Test("ByName")
+func byName() async throws {
     let process = Process(name: "uname")
     process.standardOutput = .pipe(Pipe())
     try process.launch()
@@ -13,13 +14,14 @@ test("ByName") {
 
     let result = await process.standardOutput!.readAllText()
     #if os(macOS)
-    expect(result == "Darwin")
+    #expect(result == "Darwin")
     #else
-    expect(result == "Linux")
+    #expect(result == "Linux")
     #endif
 }
 
-test("ByPath") {
+@Test("ByPath")
+func byPath() async throws {
     #if os(macOS)
     let process = Process(path: "/usr/bin/uname")
     #else
@@ -32,32 +34,35 @@ test("ByPath") {
 
     let result = await process.standardOutput!.readAllText()
     #if os(macOS)
-    expect(result == "Darwin")
+    #expect(result == "Darwin")
     #else
-    expect(result == "Linux")
+    #expect(result == "Linux")
     #endif
 }
 
-test("Status") {
+@Test("Status")
+func status() async throws {
     let process = Process(name: "sleep", arguments: ["1"])
-    expect(process.status == .created)
+    #expect(process.status == .created)
 
     try process.launch()
-    expect(process.status == .running)
+    #expect(process.status == .running)
 
     try await process.waitUntilExit()
-    expect(process.status == .exited(code: 0))
+    #expect(process.status == .exited(code: 0))
 }
 
-test("ExitTimeout") {
+@Test("ExitTimeout")
+func exitTimeout() async throws {
     let process = Process(name: "sleep", arguments: ["1"])
     try process.launch()
-    await expect(throws: ProcessError.timeout) {
+    await #expect(throws: ProcessError.timeout) {
         try await process.waitUntilExit(deadline: .now + 100.ms)
     }
 }
 
-test("FileChannel") {
+@Test("FileChannel")
+func fileChannel() async throws {
     let input = try File.randomTempFile()
     let output = try File.randomTempFile()
 
@@ -78,13 +83,11 @@ test("FileChannel") {
 
     let result = await process.standardOutput!.readAllText()
     #if os(macOS)
-    expect(result == "Darwin")
+    #expect(result == "Darwin")
     #else
-    expect(result == "Linux")
+    #expect(result == "Linux")
     #endif
 }
-
-await run()
 
 extension File {
     static func randomTempFile() throws -> File {
