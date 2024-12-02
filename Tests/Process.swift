@@ -1,5 +1,4 @@
 import Testing
-import Time
 import FileSystem
 
 @testable import Process
@@ -57,7 +56,7 @@ func exitTimeout() async throws {
     let process = Process(name: "sleep", arguments: ["1"])
     try process.launch()
     await #expect(throws: ProcessError.timeout) {
-        try await process.waitUntilExit(deadline: .now + 100.ms)
+        try await process.waitUntilExit(deadline: .now + .milliseconds(100))
     }
 }
 

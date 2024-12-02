@@ -16,8 +16,6 @@ let package = Package(
         .package(
             name: "Platform"),
         .package(
-            name: "Time"),
-        .package(
             name: "FileSystem"),
     ],
     targets: [
@@ -25,7 +23,6 @@ let package = Package(
             name: "Process",
             dependencies: [
                 .product(name: "Platform", package: "platform"),
-                .product(name: "Time", package: "time"),
                 .product(name: "FileSystem", package: "filesystem"),
             ]),
         .testTarget(

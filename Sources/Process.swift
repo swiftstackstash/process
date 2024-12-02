@@ -1,4 +1,3 @@
-import Time
 import Platform
 import FileSystem
 
@@ -268,12 +267,14 @@ extension Process {
         return true
     }
 
-    public func waitUntilExit(deadline: Time = .distantFuture) async throws {
+    public func waitUntilExit(
+        deadline: ContinuousClock.Instant? = nil
+    ) async throws {
         while self.updateStatus() == false {
-            if deadline < .now {
+            if let deadline, deadline < .now {
                 throw ProcessError.timeout
             }
-            try await Task.sleep(nanoseconds: UInt64(50.ms.nanoseconds))
+            try await Task.sleep(for: .milliseconds(50))
         }
     }
 }
