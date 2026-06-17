@@ -1,6 +1,6 @@
 # Process
 
-Improved fiber-friendly Foundation.Process
+Deprecated in favor of https://github.com/swiftlang/swift-subprocess
 
 ## Package.swift
 
